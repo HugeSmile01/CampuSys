@@ -38,6 +38,7 @@
             <p><strong>LRN:</strong> <span id="profile-lrn"></span></p>
             <p><strong>Sex:</strong> <span id="profile-sex"></span></p>
             <p><strong>Birthday:</strong> <span id="profile-birthday"></span></p>
+            <p><strong>Profile Picture:</strong> <img id="profile-picture" src="" alt="Profile Picture"></p>
         </section>
         <section id="update-profile">
             <h2>Update Profile</h2>
@@ -77,6 +78,10 @@
                 <div>
                     <label for="updateBirthday">Birthday:</label>
                     <input type="date" id="updateBirthday" name="updateBirthday" required>
+                </div>
+                <div>
+                    <label for="updateProfilePicture">Profile Picture:</label>
+                    <input type="file" id="updateProfilePicture" name="updateProfilePicture" accept="image/*">
                 </div>
                 <button type="submit">Update Profile</button>
             </form>

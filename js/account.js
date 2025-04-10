@@ -18,6 +18,7 @@ const fetchUserProfile = (userId) => {
         document.getElementById('profile-lrn').textContent = userData.lrn;
         document.getElementById('profile-sex').textContent = userData.sex;
         document.getElementById('profile-birthday').textContent = userData.birthday;
+        document.getElementById('profile-picture').src = userData.profilePicture || 'default-profile-picture.png';
     });
 };
 
@@ -42,9 +43,10 @@ document.getElementById('updateProfileForm').addEventListener('submit', (e) => {
     const updatedLRN = document.getElementById('updateLRN').value;
     const updatedSex = document.getElementById('updateSex').value;
     const updatedBirthday = document.getElementById('updateBirthday').value;
+    const updatedProfilePicture = document.getElementById('updateProfilePicture').files[0];
 
     const userRef = database.ref(`users/${userId}`);
-    userRef.update({
+    const updates = {
         name: updatedName,
         email: updatedEmail,
         role: updatedRole,
@@ -52,11 +54,33 @@ document.getElementById('updateProfileForm').addEventListener('submit', (e) => {
         lrn: updatedLRN,
         sex: updatedSex,
         birthday: updatedBirthday
-    }).then(() => {
-        alert('Profile updated successfully!');
-        fetchUserProfile(userId);
-    }).catch((error) => {
-        console.error('Error updating profile:', error);
-        alert('Failed to update profile. Please try again.');
-    });
+    };
+
+    if (updatedProfilePicture) {
+        const storageRef = firebase.storage().ref();
+        const profilePictureRef = storageRef.child(`profilePictures/${userId}`);
+        profilePictureRef.put(updatedProfilePicture).then(() => {
+            profilePictureRef.getDownloadURL().then((url) => {
+                updates.profilePicture = url;
+                userRef.update(updates).then(() => {
+                    alert('Profile updated successfully!');
+                    fetchUserProfile(userId);
+                }).catch((error) => {
+                    console.error('Error updating profile:', error);
+                    alert('Failed to update profile. Please try again.');
+                });
+            });
+        }).catch((error) => {
+            console.error('Error uploading profile picture:', error);
+            alert('Failed to upload profile picture. Please try again.');
+        });
+    } else {
+        userRef.update(updates).then(() => {
+            alert('Profile updated successfully!');
+            fetchUserProfile(userId);
+        }).catch((error) => {
+            console.error('Error updating profile:', error);
+            alert('Failed to update profile. Please try again.');
+        });
+    }
 });
