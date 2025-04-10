@@ -57,6 +57,7 @@ document.getElementById('hamburger-menu').addEventListener('click', () => {
     const isExpanded = menu.getAttribute('aria-hidden') === 'false';
     menu.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
     document.getElementById('hamburger-menu').setAttribute('aria-expanded', !isExpanded);
+    menu.classList.toggle('slide-animation');
 });
 
 // Lazy loading for images
@@ -85,4 +86,36 @@ document.addEventListener('DOMContentLoaded', () => {
             lazyLoad(image);
         });
     }
+});
+
+// Event listener for the registration form submission to capture additional registration data and store it in Firebase
+document.getElementById('registerForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fullName = document.getElementById('registerFullName').value;
+    const contact = document.getElementById('registerContact').value;
+    const lrn = document.getElementById('registerLRN').value;
+    const sex = document.getElementById('registerSex').value;
+    const birthday = document.getElementById('registerBirthday').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            const userRef = database.ref(`users/${user.uid}`);
+            userRef.set({
+                fullName,
+                contact,
+                lrn,
+                sex,
+                birthday,
+                email
+            });
+            user.sendEmailVerification();
+            alert('Registration successful! Please verify your email before logging in.');
+        })
+        .catch((error) => {
+            console.error('Error during registration:', error);
+            alert('Registration failed. Please try again.');
+        });
 });

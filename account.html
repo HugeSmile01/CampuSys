@@ -34,6 +34,10 @@
             <p><strong>Name:</strong> <span id="profile-name"></span></p>
             <p><strong>Email:</strong> <span id="profile-email"></span></p>
             <p><strong>Role:</strong> <span id="profile-role"></span></p>
+            <p><strong>Contact Number:</strong> <span id="profile-contact"></span></p>
+            <p><strong>LRN:</strong> <span id="profile-lrn"></span></p>
+            <p><strong>Sex:</strong> <span id="profile-sex"></span></p>
+            <p><strong>Birthday:</strong> <span id="profile-birthday"></span></p>
         </section>
         <section id="update-profile">
             <h2>Update Profile</h2>
@@ -54,15 +58,40 @@
                         <option value="administrator">Administrator</option>
                     </select>
                 </div>
+                <div>
+                    <label for="updateContact">Contact Number:</label>
+                    <input type="text" id="updateContact" name="updateContact" required>
+                </div>
+                <div>
+                    <label for="updateLRN">LRN:</label>
+                    <input type="text" id="updateLRN" name="updateLRN" required>
+                </div>
+                <div>
+                    <label for="updateSex">Sex:</label>
+                    <select id="updateSex" name="updateSex" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="updateBirthday">Birthday:</label>
+                    <input type="date" id="updateBirthday" name="updateBirthday" required>
+                </div>
                 <button type="submit">Update Profile</button>
             </form>
         </section>
     </main>
     <footer>
-        <p>&copy; 2023 CampuSys. All rights reserved.</p>
+        <p>&copy; <span id="currentYear"></span> CampuSys. All rights reserved.</p>
     </footer>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentYear = new Date().getFullYear();
+            document.getElementById('currentYear').textContent = currentYear;
+        });
+
         // Add animations and transitions for profile update form
         document.getElementById('updateProfileForm').addEventListener('submit', (e) => {
             e.preventDefault();
