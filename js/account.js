@@ -14,6 +14,10 @@ const fetchUserProfile = (userId) => {
         document.getElementById('profile-name').textContent = userData.name;
         document.getElementById('profile-email').textContent = userData.email;
         document.getElementById('profile-role').textContent = userData.role;
+        document.getElementById('profile-contact').textContent = userData.contact;
+        document.getElementById('profile-lrn').textContent = userData.lrn;
+        document.getElementById('profile-sex').textContent = userData.sex;
+        document.getElementById('profile-birthday').textContent = userData.birthday;
     });
 };
 
@@ -23,7 +27,7 @@ auth.onAuthStateChanged((user) => {
         fetchUserProfile(user.uid);
     } else {
         // Redirect to login page if user is not authenticated
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
     }
 });
 
@@ -34,12 +38,20 @@ document.getElementById('updateProfileForm').addEventListener('submit', (e) => {
     const updatedName = document.getElementById('updateName').value;
     const updatedEmail = document.getElementById('updateEmail').value;
     const updatedRole = document.getElementById('updateRole').value;
+    const updatedContact = document.getElementById('updateContact').value;
+    const updatedLRN = document.getElementById('updateLRN').value;
+    const updatedSex = document.getElementById('updateSex').value;
+    const updatedBirthday = document.getElementById('updateBirthday').value;
 
     const userRef = database.ref(`users/${userId}`);
     userRef.update({
         name: updatedName,
         email: updatedEmail,
-        role: updatedRole
+        role: updatedRole,
+        contact: updatedContact,
+        lrn: updatedLRN,
+        sex: updatedSex,
+        birthday: updatedBirthday
     }).then(() => {
         alert('Profile updated successfully!');
         fetchUserProfile(userId);

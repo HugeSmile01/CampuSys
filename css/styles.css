@@ -139,3 +139,76 @@ p {
         margin: 1rem 0;
     }
 }
+
+/* Styles for Login and Registration Forms */
+#loginForm, #registerForm {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#loginForm div, #registerForm div {
+    margin-bottom: 1rem;
+}
+
+#loginForm label, #registerForm label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+#loginForm input, #registerForm input, #registerForm select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+
+#loginForm button, #registerForm button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#loginForm button:hover, #registerForm button:hover {
+    background-color: #0056b3;
+}
+
+/* Slide Animation for Hamburger Menu */
+#navigation-menu.slide-animation {
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+#navigation-menu {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    #loginForm, #registerForm {
+        padding: 0.5rem;
+    }
+
+    #loginForm button, #registerForm button {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+}
