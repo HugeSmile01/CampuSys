@@ -33,5 +33,41 @@
     <footer>
         <p>&copy; 2023 CampuSys. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Add drag-and-drop functionality for organizing events
+        document.addEventListener('DOMContentLoaded', () => {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                droppable: true,
+                events: [], // Fetch events from Firebase and populate here
+                eventReceive: (info) => {
+                    // Handle event drop
+                    const event = info.event;
+                    // Save the new event to Firebase
+                    const eventsRef = firebase.database().ref('events');
+                    eventsRef.push({
+                        title: event.title,
+                        start: event.start.toISOString(),
+                        end: event.end ? event.end.toISOString() : null
+                    });
+                },
+                eventDrop: (info) => {
+                    // Handle event drag-and-drop
+                    const event = info.event;
+                    // Update the event in Firebase
+                    const eventRef = firebase.database().ref(`events/${event.id}`);
+                    eventRef.update({
+                        start: event.start.toISOString(),
+                        end: event.end ? event.end.toISOString() : null
+                    });
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
 </body>
 </html>
