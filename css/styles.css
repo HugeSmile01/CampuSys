@@ -7,6 +7,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f8f9fa;
+    transition: background-color 0.3s ease;
 }
 
 header {
@@ -211,4 +212,181 @@ p {
         padding: 0.5rem;
         font-size: 0.875rem;
     }
+}
+
+/* Advanced UI Design Elements */
+button {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+input, select, textarea {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Animations and Transitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.visible {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #343a40;
+    color: white;
+}
+
+body.dark-mode header, body.dark-mode footer {
+    background-color: #212529;
+}
+
+body.dark-mode nav ul li a {
+    color: #adb5bd;
+}
+
+body.dark-mode nav ul li a:hover {
+    color: white;
+}
+
+body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+    background-color: #495057;
+    color: white;
+    border-color: #6c757d;
+}
+
+body.dark-mode input:focus, body.dark-mode select:focus, body.dark-mode textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+body.dark-mode button {
+    background-color: #007bff;
+    color: white;
+}
+
+body.dark-mode button:hover {
+    background-color: #0056b3;
+}
+
+/* Styles for New Features */
+#forgotPasswordLink {
+    display: block;
+    margin-top: 1rem;
+    text-align: right;
+    color: #007bff;
+    cursor: pointer;
+}
+
+#forgotPasswordLink:hover {
+    text-decoration: underline;
+}
+
+#profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-button, .like-button, .share-button {
+    margin-top: 0.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.comment-button:hover, .like-button:hover, .share-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.comment-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comment-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.comments-section {
+    margin-top: 1rem;
+}
+
+.comments-list {
+    margin-top: 0.5rem;
+}
+
+#fileUploadForm {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#fileUploadForm div {
+    margin-bottom: 1rem;
+}
+
+#fileUploadForm label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+#fileUploadForm input, #fileUploadForm textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#fileUploadForm input:focus, #fileUploadForm textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#fileUploadForm button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#fileUploadForm button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
 }

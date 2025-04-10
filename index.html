@@ -16,7 +16,7 @@
                 <span></span>
             </button>
             <ul id="navigation-menu" aria-hidden="true">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="newsfeed.html">Home</a></li>
                 <li><a href="newsfeed.html">Newsfeed</a></li>
                 <li><a href="calendar.html">Calendar</a></li>
                 <li><a href="post.html">Post</a></li>
@@ -41,6 +41,9 @@
                     <input type="password" id="loginPassword" name="loginPassword" required>
                 </div>
                 <button type="submit">Login</button>
+                <div>
+                    <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+                </div>
             </form>
         </section>
         <section id="register">
@@ -81,6 +84,22 @@
         document.addEventListener('DOMContentLoaded', () => {
             const currentYear = new Date().getFullYear();
             document.getElementById('currentYear').textContent = currentYear;
+        });
+
+        // Add functionality for "Forgot Password" feature
+        document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = prompt('Please enter your email address:');
+            if (email) {
+                firebase.auth().sendPasswordResetEmail(email)
+                    .then(() => {
+                        alert('Password reset email sent! Please check your inbox.');
+                    })
+                    .catch((error) => {
+                        console.error('Error sending password reset email:', error);
+                        alert('Failed to send password reset email. Please try again.');
+                    });
+            }
         });
     </script>
 </body>

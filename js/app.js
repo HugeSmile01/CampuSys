@@ -119,3 +119,88 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
             alert('Registration failed. Please try again.');
         });
 });
+
+// Add functionality for "Forgot Password" feature
+document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
+    e.preventDefault();
+    const email = prompt('Please enter your email address:');
+    if (email) {
+        firebase.auth().sendPasswordResetEmail(email)
+            .then(() => {
+                alert('Password reset email sent! Please check your inbox.');
+            })
+            .catch((error) => {
+                console.error('Error sending password reset email:', error);
+                alert('Failed to send password reset email. Please try again.');
+            });
+    }
+});
+
+// Add dark mode toggle
+const toggleDarkMode = () => {
+    document.body.classList.toggle('dark-mode');
+};
+
+document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+// Add chat feature
+const chatInput = document.getElementById('chatInput');
+const chatMessages = document.getElementById('chatMessages');
+
+chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        const message = chatInput.value;
+        const userId = firebase.auth().currentUser.uid;
+        const chatRef = database.ref('chat');
+
+        chatRef.push({
+            userId,
+            message,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+
+        chatInput.value = '';
+    }
+});
+
+const fetchChatMessages = () => {
+    const chatRef = database.ref('chat');
+    chatRef.on('value', (snapshot) => {
+        const messages = snapshot.val();
+        chatMessages.innerHTML = '';
+
+        for (const messageId in messages) {
+            const message = messages[messageId];
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message');
+            messageElement.innerHTML = `
+                <p>${message.message}</p>
+                <small>${new Date(message.timestamp).toLocaleString()}</small>
+            `;
+            chatMessages.appendChild(messageElement);
+        }
+    });
+};
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        fetchChatMessages();
+    } else {
+        alert('Please log in to use the chat feature.');
+        window.location.href = 'index.html';
+    }
+});
+
+// Implement role-based access control system
+const checkUserRole = (requiredRole) => {
+    const userId = firebase.auth().currentUser.uid;
+    const userRef = database.ref(`users/${userId}`);
+
+    userRef.once('value', (snapshot) => {
+        const userData = snapshot.val();
+        if (userData.role !== requiredRole) {
+            alert('You do not have permission to access this feature.');
+            window.location.href = 'index.html';
+        }
+    });
+};

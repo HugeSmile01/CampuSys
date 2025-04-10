@@ -66,3 +66,36 @@ firebase.auth().onAuthStateChanged((user) => {
         window.location.href = 'index.html';
     }
 });
+
+// Add file upload and sharing feature
+document.getElementById('fileUploadForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fileName = document.getElementById('fileName').value;
+    const fileDescription = document.getElementById('fileDescription').value;
+    const fileUpload = document.getElementById('fileUpload').files[0];
+    const userId = firebase.auth().currentUser.uid;
+
+    if (fileUpload) {
+        const storageRef = firebase.storage().ref();
+        const fileRef = storageRef.child(`resources/${userId}/${fileUpload.name}`);
+        fileRef.put(fileUpload).then(() => {
+            fileRef.getDownloadURL().then((url) => {
+                const resourceRef = database.ref('resources').push();
+                resourceRef.set({
+                    name: fileName,
+                    description: fileDescription,
+                    link: url,
+                    type: 'shared',
+                    userId: userId
+                });
+                alert('File uploaded and shared successfully!');
+                document.getElementById('fileUploadForm').reset();
+            });
+        }).catch((error) => {
+            console.error('Error uploading file:', error);
+            alert('Failed to upload file. Please try again.');
+        });
+    } else {
+        alert('Please select a file to upload.');
+    }
+});
