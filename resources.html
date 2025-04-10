@@ -104,5 +104,17 @@
     <footer>
         <p>&copy; 2023 CampuSys. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Add animations and transitions for resource list
+        document.addEventListener('DOMContentLoaded', () => {
+            const resources = document.querySelectorAll('#toolsApps li, #moduleList li');
+            resources.forEach((resource, index) => {
+                setTimeout(() => {
+                    resource.classList.add('visible');
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>

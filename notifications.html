@@ -35,5 +35,17 @@
     <footer>
         <p>&copy; 2023 CampuSys. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Add animations and transitions for notifications
+        document.addEventListener('DOMContentLoaded', () => {
+            const notifications = document.querySelectorAll('.notification');
+            notifications.forEach((notification, index) => {
+                setTimeout(() => {
+                    notification.classList.add('visible');
+                }, index * 200);
+            });
+        });
+    </script>
 </body>
 </html>

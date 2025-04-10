@@ -61,5 +61,17 @@
     <footer>
         <p>&copy; 2023 CampuSys. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Add animations and transitions for profile update form
+        document.getElementById('updateProfileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const form = e.target;
+            form.classList.add('submitting');
+            setTimeout(() => {
+                form.classList.remove('submitting');
+            }, 1000);
+        });
+    </script>
 </body>
 </html>

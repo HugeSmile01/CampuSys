@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import { app, analytics } from './firebaseConfig';
 import 'firebase/database';
 
 // Firebase Realtime Database reference
