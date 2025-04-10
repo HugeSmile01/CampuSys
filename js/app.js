@@ -66,3 +66,39 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
             alert('Login failed. Please try again.');
         });
 });
+
+// Toggle hamburger menu
+document.getElementById('hamburger-menu').addEventListener('click', () => {
+    const menu = document.getElementById('navigation-menu');
+    const isExpanded = menu.getAttribute('aria-hidden') === 'false';
+    menu.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
+    document.getElementById('hamburger-menu').setAttribute('aria-expanded', !isExpanded);
+});
+
+// Lazy loading for images
+document.addEventListener('DOMContentLoaded', () => {
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    const lazyLoad = (image) => {
+        image.src = image.dataset.src;
+        image.removeAttribute('data-src');
+    };
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    lazyLoad(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        lazyImages.forEach((image) => {
+            observer.observe(image);
+        });
+    } else {
+        lazyImages.forEach((image) => {
+            lazyLoad(image);
+        });
+    }
+});
