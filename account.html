@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - CampuSys</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+    <script src="account.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="newsfeed.html">Newsfeed</a></li>
+                <li><a href="calendar.html">Calendar</a></li>
+                <li><a href="post.html">Post</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="account.html">Account</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Account</h1>
+        <section id="profile-info">
+            <h2>Profile Information</h2>
+            <p><strong>Name:</strong> <span id="profile-name"></span></p>
+            <p><strong>Email:</strong> <span id="profile-email"></span></p>
+            <p><strong>Role:</strong> <span id="profile-role"></span></p>
+        </section>
+        <section id="update-profile">
+            <h2>Update Profile</h2>
+            <form id="updateProfileForm">
+                <div>
+                    <label for="updateName">Name:</label>
+                    <input type="text" id="updateName" name="updateName" required>
+                </div>
+                <div>
+                    <label for="updateEmail">Email:</label>
+                    <input type="email" id="updateEmail" name="updateEmail" required>
+                </div>
+                <div>
+                    <label for="updateRole">Role:</label>
+                    <select id="updateRole" name="updateRole" required>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="administrator">Administrator</option>
+                    </select>
+                </div>
+                <button type="submit">Update Profile</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 CampuSys. All rights reserved.</p>
+    </footer>
+</body>
+</html>

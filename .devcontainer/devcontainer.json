@@ -1,0 +1,6 @@
+{
+  "tasks": {
+    "build": "echo \"No build commands available for this repository.\"",
+    "launch": "python3 -m http.server"
+  }
+}
