@@ -80,3 +80,62 @@ p {
     font-size: 1.25rem;
     color: #6c757d;
 }
+
+/* Hamburger Menu Styles */
+#hamburger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+}
+
+#hamburger-menu span {
+    width: 30px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s linear;
+    position: relative;
+}
+
+#hamburger-menu span:nth-child(1) {
+    transform: ${({ isOpen }) => (isOpen ? 'rotate(45deg)' : 'rotate(0)')};
+}
+
+#hamburger-menu span:nth-child(2) {
+    opacity: ${({ isOpen }) => (isOpen ? '0' : '1')};
+    transform: ${({ isOpen }) => (isOpen ? 'translateX(20px)' : 'translateX(0)')};
+}
+
+#hamburger-menu span:nth-child(3) {
+    transform: ${({ isOpen }) => (isOpen ? 'rotate(-45deg)' : 'rotate(0)')};
+}
+
+@media (max-width: 768px) {
+    #hamburger-menu {
+        display: flex;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #343a40;
+        transition: all 0.3s ease-in-out;
+        max-height: ${({ isOpen }) => (isOpen ? '300px' : '0')};
+        overflow: hidden;
+    }
+
+    nav ul li {
+        margin: 1rem 0;
+    }
+}
