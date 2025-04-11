@@ -62,8 +62,14 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         fetchResources();
     } else {
-        alert('Please log in to view the resources.');
-        window.location.href = 'index.html';
+        Swal.fire({
+            icon: 'info',
+            title: 'Session expired',
+            text: 'Please log in again to continue using the application.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'index.html';
+        });
     }
 });
 
@@ -88,14 +94,28 @@ document.getElementById('fileUploadForm').addEventListener('submit', (e) => {
                     type: 'shared',
                     userId: userId
                 });
-                alert('File uploaded and shared successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'File uploaded and shared successfully!',
+                    confirmButtonText: 'OK'
+                });
                 document.getElementById('fileUploadForm').reset();
             });
         }).catch((error) => {
             console.error('Error uploading file:', error);
-            alert('Failed to upload file. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to upload file',
+                text: 'Please try again.',
+                confirmButtonText: 'OK'
+            });
         });
     } else {
-        alert('Please select a file to upload.');
+        Swal.fire({
+            icon: 'warning',
+            title: 'No file selected',
+            text: 'Please select a file to upload.',
+            confirmButtonText: 'OK'
+        });
     }
 });

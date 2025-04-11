@@ -22,11 +22,21 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
             const user = userCredential.user;
             setCustomUserClaims(user.uid, role);
             user.sendEmailVerification();
-            alert('Registration successful! Please verify your email before logging in.');
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration successful!',
+                text: 'Please verify your email before logging in.',
+                confirmButtonText: 'OK'
+            });
         })
         .catch((error) => {
             console.error('Error during registration:', error);
-            alert('Registration failed. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration failed',
+                text: 'Please try again.',
+                confirmButtonText: 'OK'
+            });
         });
 });
 
@@ -35,19 +45,42 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
+    Swal.fire({
+        title: 'Logging in...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             const user = userCredential.user;
             if (user.emailVerified) {
-                alert('Login successful!');
-                // Redirect to the appropriate dashboard or homepage
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login successful!',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Redirect to the appropriate dashboard or homepage
+                });
             } else {
-                alert('Please verify your email before logging in.');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Email not verified',
+                    text: 'Please verify your email before logging in.',
+                    confirmButtonText: 'OK'
+                });
             }
         })
         .catch((error) => {
             console.error('Error during login:', error);
-            alert('Login failed. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Login failed',
+                text: 'Please try again.',
+                confirmButtonText: 'OK'
+            });
         });
 });
 
@@ -112,11 +145,21 @@ document.getElementById('registerForm').addEventListener('submit', (e) => {
                 email
             });
             user.sendEmailVerification();
-            alert('Registration successful! Please verify your email before logging in.');
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration successful!',
+                text: 'Please verify your email before logging in.',
+                confirmButtonText: 'OK'
+            });
         })
         .catch((error) => {
             console.error('Error during registration:', error);
-            alert('Registration failed. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration failed',
+                text: 'Please try again.',
+                confirmButtonText: 'OK'
+            });
         });
 });
 
@@ -127,11 +170,21 @@ document.getElementById('forgotPasswordLink').addEventListener('click', (e) => {
     if (email) {
         firebase.auth().sendPasswordResetEmail(email)
             .then(() => {
-                alert('Password reset email sent! Please check your inbox.');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Password reset email sent!',
+                    text: 'Please check your inbox.',
+                    confirmButtonText: 'OK'
+                });
             })
             .catch((error) => {
                 console.error('Error sending password reset email:', error);
-                alert('Failed to send password reset email. Please try again.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to send password reset email',
+                    text: 'Please try again.',
+                    confirmButtonText: 'OK'
+                });
             });
     }
 });
@@ -186,8 +239,14 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         fetchChatMessages();
     } else {
-        alert('Please log in to use the chat feature.');
-        window.location.href = 'index.html';
+        Swal.fire({
+            icon: 'info',
+            title: 'Session expired',
+            text: 'Please log in again to continue using the application.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'index.html';
+        });
     }
 });
 
@@ -199,8 +258,32 @@ const checkUserRole = (requiredRole) => {
     userRef.once('value', (snapshot) => {
         const userData = snapshot.val();
         if (userData.role !== requiredRole) {
-            alert('You do not have permission to access this feature.');
-            window.location.href = 'index.html';
+            Swal.fire({
+                icon: 'error',
+                title: 'Access denied',
+                text: 'You do not have permission to access this feature.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = 'index.html';
+            });
         }
     });
 };
+
+// Global authentication check to restrict access to other files
+const globalAuthCheck = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+            Swal.fire({
+                icon: 'info',
+                title: 'Session expired',
+                text: 'Please log in again to continue using the application.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+    });
+};
+
+globalAuthCheck();

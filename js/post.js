@@ -49,7 +49,13 @@ postForm.addEventListener('submit', (e) => {
         });
         postForm.reset();
     } else {
-        alert('Please log in to create a post.');
+        Swal.fire({
+            icon: 'info',
+            title: 'Please log in to create a post.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'index.html';
+        });
     }
 });
 
@@ -78,7 +84,13 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         fetchPosts();
     } else {
-        alert('Please log in to view the posts.');
-        window.location.href = 'index.html';
+        Swal.fire({
+            icon: 'info',
+            title: 'Session expired',
+            text: 'Please log in again to continue using the application.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'index.html';
+        });
     }
 });

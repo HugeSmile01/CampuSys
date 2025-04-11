@@ -63,24 +63,47 @@ document.getElementById('updateProfileForm').addEventListener('submit', (e) => {
             profilePictureRef.getDownloadURL().then((url) => {
                 updates.profilePicture = url;
                 userRef.update(updates).then(() => {
-                    alert('Profile updated successfully!');
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Profile updated successfully!',
+                        confirmButtonText: 'OK'
+                    });
                     fetchUserProfile(userId);
                 }).catch((error) => {
                     console.error('Error updating profile:', error);
-                    alert('Failed to update profile. Please try again.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to update profile',
+                        text: 'Please try again.',
+                        confirmButtonText: 'OK'
+                    });
                 });
             });
         }).catch((error) => {
             console.error('Error uploading profile picture:', error);
-            alert('Failed to upload profile picture. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to upload profile picture',
+                text: 'Please try again.',
+                confirmButtonText: 'OK'
+            });
         });
     } else {
         userRef.update(updates).then(() => {
-            alert('Profile updated successfully!');
+            Swal.fire({
+                icon: 'success',
+                title: 'Profile updated successfully!',
+                confirmButtonText: 'OK'
+            });
             fetchUserProfile(userId);
         }).catch((error) => {
             console.error('Error updating profile:', error);
-            alert('Failed to update profile. Please try again.');
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to update profile',
+                text: 'Please try again.',
+                confirmButtonText: 'OK'
+            });
         });
     }
 });
