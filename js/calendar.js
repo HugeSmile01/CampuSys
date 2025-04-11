@@ -40,8 +40,14 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         fetchEvents();
     } else {
-        alert('Please log in to view the calendar planner.');
-        window.location.href = 'index.html';
+        Swal.fire({
+            icon: 'info',
+            title: 'Session expired',
+            text: 'Please log in again to continue using the application.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'index.html';
+        });
     }
 });
 
@@ -80,7 +86,14 @@ const syncCalendar = () => {
             }
         });
     } else {
-        alert('Please log in to sync your calendar.');
+        Swal.fire({
+            icon: 'info',
+            title: 'Session expired',
+            text: 'Please log in again to continue using the application.',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'index.html';
+        });
     }
 };
 
